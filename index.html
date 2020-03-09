@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/normalize/6.0.0/normalize.css">
+    <link rel="stylesheet" type="text/css" href="main.css">
+    <title>Travel Time</title>
+</head>
+<body>
+    <main>
+        <form class="mapInput">
+            <!-- <input type="text" name="key" id="key" placeholder="API key"> -->
+            <label for="address">Address?</label>
+            <input type="text" name="address" id="address" placeholder="RCHC+86 Lebanon, Oak, KS" autocomplete="off">
+            <br>
+
+            <label for="time">Travel Time?</label>
+            <input type="number" name="time" id="time" autocomplete="off">
+            <span>mins</span>
+            
+            <br>
+            <!-- <input type="radio" name="transit" id="walk" value="walk">
+            <label for="walk">Walk </label>
+            <input type="radio" name="transit" id="bike" value="bike">
+            <label for="bike">Bike </label>
+            <input type="radio" name="transit" id="car" value="car">
+            <label for="car">Car </label> <br> -->
+            <input type="submit" name="Submit" class="submit">
+            
+            <section id="map">
+                
+            </section>
+        </form>
+    </main>
+    
+    <script src="//code.jquery.com/jquery.min.js"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=ApiKeyHere"></script>
+    <script type="text/javascript" src="index.js"></script>
+</body>
+</html>

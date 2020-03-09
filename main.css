@@ -1,0 +1,31 @@
+*{
+    box-sizing: border-box;
+}
+
+.intro{
+    border: 1px solid black;
+    height:300px;
+    width:400px;
+    margin:20px;
+    text-align: center;
+    background-color: gainsboro;
+
+}
+
+.mapInput{
+    border: 1px solid black;
+    height:400px;
+    width:400px;
+    margin:20px;
+    text-align: center;
+    background-color: gainsboro; 
+}
+
+#map{
+    border: 1px solid black;
+    height:80vh;
+    width:80vw;
+    margin:20px;
+    text-align: center;
+    background-color: wheat;
+}
