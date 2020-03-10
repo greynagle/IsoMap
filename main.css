@@ -29,3 +29,11 @@
     text-align: center;
     background-color: wheat;
 }
+
+.description{
+    position: absolute;
+    right:20px;
+    top:5px;
+    width:500px;
+    text-align: right;
+}
