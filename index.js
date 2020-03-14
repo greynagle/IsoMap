@@ -1,3 +1,4 @@
+// Listens for clicking the load-in screen continue prompt
 function handlePrompt(){
     $('#prompt').click(e=>{
         $('footer.prompt').toggleClass('hidden');
@@ -20,9 +21,10 @@ const state={
     initialShift:[],
     dest:{},
     count:0,
-    calls:0
+    calls:7
 }
 
+// listener for origin input
 function handleAddress(){
     $('#address').change(e => {
         e.preventDefault();
@@ -30,13 +32,7 @@ function handleAddress(){
     })
 }
 
-// function handleKey(){
-//     $('#key').change(e =>{
-//         e.preventDefault()
-//         return state.key=e.target.value
-//     })
-// }
-
+// listener for time input
 function handleTime(){
     $('#time').change(e => {
         e.preventDefault();
@@ -49,6 +45,7 @@ function handleTime(){
     })
 }
 
+// listener for travel type
 function handleTransit(){
     $('input[type="radio"]').change(e => {
         e.preventDefault();
@@ -56,6 +53,7 @@ function handleTransit(){
     })
 }
 
+// listener for submit click
 function handleSubmit(){
     $('input[type="submit"]').click(e=>{
         e.preventDefault();
@@ -63,7 +61,7 @@ function handleSubmit(){
     })
 }
 
-
+// runs on submit
 function getOrigin(){
     fetch('./key.txt')
         .then(response => response.text())
@@ -82,9 +80,7 @@ function getGeocode(){
     fetch(query)
         .then(response => response.json())
         .then(responseJson => {
-            // console.log(responseJson)
             state.origin=[responseJson.results[0].geometry.location.lat,responseJson.results[0].geometry.location.lng];
-            // console.log(state.origin)
             getMatrix(minToMod());
         })
         .catch(error => console.error(error));
@@ -106,12 +102,9 @@ function getMatrix(){
 // sorts the distancematrix response and if above a certain percentage incorrect, recalls the getMatrix function to adjust
 function callback(response, status) {
     if (status == 'OK') {
-        // console.log(response)
-        // console.log(response.rows[0].elements)
         let responseValues=response.rows[0].elements.map(val => {
             return (val.duration.value)/60;
         })
-        // console.log(responseValues)
 
         if (state.count<state.calls && acceptDest(responseValues)){
             adjustMagnitude(responseValues);
@@ -134,13 +127,11 @@ function minToMod(){
         mag.push(state.time*transitChoice/shiftMagMod)
         i++
     }
-    // console.log(mag)
     state.initialShift=mag;
 }
 
-// generates the cardinal and half cardinal coordinates for the maps
+// generates the cardinal and third-cardinal coordinates for the maps
 function destGrid(o,m){    
-    // console.log(m)
     let grid=[
         [o[0]+m[0],o[1]],
         [o[0]+(m[1]*.866),o[1]+(m[1]*.500)],
@@ -179,14 +170,13 @@ function adjustMagnitude(resVal){
     for (let i=0; i<resVal.length;i++){
         percentDifference.push((state.time-resVal[i])/state.time)
     }
-    // console.log(percentDifference)
     for (let i=0; i<percentDifference.length;i++){
         state.initialShift[i]=(state.initialShift[i] + state.initialShift[i]*(1+percentDifference[i]))/2;
     }
 }
 
+// generates the image of the map and related map objects
 function initMap() {
-    // console.log('got here')
     let map = new google.maps.Map(document.getElementById('map'), {
       zoom: 15,
       center: {lat:state.origin[0],lng:state.origin[1]},
