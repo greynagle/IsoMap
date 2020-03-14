@@ -1,39 +1,127 @@
 *{
     box-sizing: border-box;
+    font-family: "andale mono", /* MS WebFont */ "monotype.com", /* MS WebFont, former name */ monaco, /* MacOS */ /* Fallback options */ "courier new", /* Windows, MacOS */ courier, /* Unix+X, MacOS */ monospace;
 }
 
-.intro{
-    border: 1px solid black;
-    height:300px;
-    width:400px;
-    margin:20px;
+.prompt{
+    position:fixed;
+    height:100%;
+    width:100%;
     text-align: center;
-    background-color: gainsboro;
+    top:0;
+    left:0;
+    background-color: rosybrown;
+    border: 5px solid black;
+}
 
+.hidden{
+    display: none;
+}
+
+span{
+    font-size: large;
+    font-weight: bolder;
+}
+
+body{
+    background-color: rgb(245, 238, 179) ;
 }
 
 .mapInput{
+    position:absolute;
+    left:0;
+    top:0;
     border: 1px solid black;
-    height:400px;
-    width:400px;
-    margin:20px;
+    height:100%;
+    width: 100%;
     text-align: center;
-    background-color: gainsboro; 
+    margin: 0px;
+    padding-top:2px;
+}
+
+input[type="text"], input[type="number"]{
+    width: 97vw;
+}
+
+input[type="radio"]{
+    vertical-align: middle;
+}
+
+input[type="submit"]{
+    padding-left:auto;
+    padding-right:auto;
+    width:50%;
+}
+
+.inline{
+    display: inline-block;
+    width:30vw;
+    text-align: center;
+    vertical-align: middle;
+    margin-bottom:5px;
+    margin-top:3px;
 }
 
 #map{
     border: 1px solid black;
     height:80vh;
-    width:80vw;
-    margin:20px;
+    width:97vw;
+    margin-left:auto;
+    margin-right:auto;
+    margin-top:3px;
     text-align: center;
     background-color: wheat;
 }
 
-.description{
-    position: absolute;
-    right:20px;
-    top:5px;
-    width:500px;
-    text-align: right;
-}
+@media only screen and (min-device-width : 760px){
+    .mapInput{
+        border: none;
+        width: 35%;
+    }
+
+    input[type="text"], input[type="number"]{
+        width: 97%;
+    }
+    
+    input[type="radio"]{
+        vertical-align: middle;
+    }
+    
+    input[type="submit"]{
+        padding-left:auto;
+        padding-right:auto;
+        width:50%;
+    }
+
+    .inline{
+        display: inline-block;
+        width:30%;
+        text-align: center;
+        vertical-align: middle;
+        margin-bottom:5px;
+        margin-top:3px;
+    }
+
+    #map{
+        margin-left:10px;
+    }
+
+    .prompt{
+        position:flex;
+        height:300px;
+        width:500px;
+        justify-content: right;
+        align-items: center;
+        }
+
+    .fade{
+        position:fixed;
+        top:0;
+        left:0;
+        width: 100%;
+        height:100%;
+        background-color: white;
+        opacity: .9;
+    }
+    }
+

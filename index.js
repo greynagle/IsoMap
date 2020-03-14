@@ -1,15 +1,26 @@
+function handlePrompt(){
+    $('#prompt').click(e=>{
+        $('footer.prompt').toggleClass('hidden');
+        $('div.fade').toggleClass('hidden');
+    })
+}
+
 const state={
     address:'',
     time:0,
     transit:'',
     key:'',
     origin:[],
-    transitMod:84,
+    transitMod:{
+        WALKING:84,
+        BICYCLING:295,
+        DRIVING:1200
+    },
     magMod:111319,
     initialShift:[],
     dest:{},
     count:0,
-    calls:3
+    calls:0
 }
 
 function handleAddress(){
@@ -88,7 +99,7 @@ function getMatrix(){
     {
         origins: [{lat:state.origin[0],lng:state.origin[1]}],
         destinations: dest,
-        travelMode: 'DRIVING'
+        travelMode: state.transit
     }, callback);
 }
 
@@ -115,11 +126,12 @@ function callback(response, status) {
 
 // for the first guess at distances
 function minToMod(){
-    const shiftMagMod=state.magMod*Math.cos(Math.abs(state.origin[0])*3.14159265/180)
+    const shiftMagMod=state.magMod*Math.cos(state.origin[0]*3.14159265/180)
+    const transitChoice=state.transitMod[state.transit];
     let mag=[];
     let i=0;
-    while (i<=7){
-        mag.push(state.time*state.transitMod/shiftMagMod)
+    while (i<=11){
+        mag.push(state.time*transitChoice/shiftMagMod)
         i++
     }
     // console.log(mag)
@@ -131,13 +143,17 @@ function destGrid(o,m){
     // console.log(m)
     let grid=[
         [o[0]+m[0],o[1]],
-        [o[0]+(m[1]*.707),o[1]+(m[1]*.707)],
-        [o[0],o[1]+m[2]],
-        [o[0]-(m[3]*.707),o[1]+(m[3]*.707)],
-        [o[0]-m[4],o[1]],
-        [o[0]-(m[5]*.707),o[1]-(m[5]*.707)],
-        [o[0],o[1]-m[6]],
-        [o[0]+(m[7]*.707),o[1]-(m[7]*.707)]
+        [o[0]+(m[1]*.866),o[1]+(m[1]*.500)],
+        [o[0]+(m[2]*.500),o[1]+(m[2]*.866)],
+        [o[0],o[1]+m[3]],
+        [o[0]-(m[4]*.500),o[1]+(m[4]*.866)],
+        [o[0]-(m[5]*.866),o[1]+(m[5]*.500)],
+        [o[0]-m[6],o[1]],
+        [o[0]-(m[7]*.866),o[1]-(m[7]*.500)],
+        [o[0]-(m[8]*.500),o[1]-(m[8]*.866)],
+        [o[0],o[1]-m[9]],
+        [o[0]+(m[10]*.500),o[1]-(m[10]*.866)],
+        [o[0]+(m[11]*.866),o[1]-(m[11]*.500)]
     ]
     return grid.reduce((acc,val)=>{
         return [...acc, {lat:val[0],lng:val[1]}]
@@ -165,7 +181,7 @@ function adjustMagnitude(resVal){
     }
     // console.log(percentDifference)
     for (let i=0; i<percentDifference.length;i++){
-        state.initialShift[i]=state.initialShift[i]*(1+percentDifference[i]);
+        state.initialShift[i]=(state.initialShift[i] + state.initialShift[i]*(1+percentDifference[i]))/2;
     }
 }
 
@@ -185,14 +201,14 @@ function initMap() {
       strokeColor: '#FF0000',
       strokeOpacity: 0.8,
       strokeWeight: 2,
-      fillColor: '#FF0000',
+      fillColor: '#f5cdb3',
       fillOpacity: 0.35
     });
     isochrone.setMap(map);
   }
 
 function main() {
-    // handleKey();
+    handlePrompt();
     handleAddress();
     handleTime();
     handleTransit();

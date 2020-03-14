@@ -8,38 +8,43 @@
     <title>Travel Time</title>
 </head>
 <body>
+    
     <main>
         <form class="mapInput">
             <!-- <input type="text" name="key" id="key" placeholder="API key"> -->
-            <label for="address">Address?</label>
-            <input type="text" name="address" id="address" placeholder="RCHC+86 Lebanon, Oak, KS" autocomplete="off">
+            <input type="text" name="address" id="address" placeholder="Address" autocomplete="off">
             <br>
-
-            <label for="time">Travel Time?</label>
-            <input type="number" name="time" id="time" autocomplete="off">
-            <span>mins</span>
-            
+            <input type="number" name="time" id="time" autocomplete="off" placeholder="Minutes">            
             <br>
-            <!-- <input type="radio" name="transit" id="walk" value="walk">
-            <label for="walk">Walk </label>
-            <input type="radio" name="transit" id="bike" value="bike">
-            <label for="bike">Bike </label>
-            <input type="radio" name="transit" id="car" value="car">
-            <label for="car">Car </label> <br> -->
+                <label for="WALKING" class="inline">
+                    Walk <input type="radio" name="transit" id="WALKING" value="WALKING"> 
+                </label>
+                <label for="BICYCLING" class="inline">
+                    Bike <input type="radio" name="transit" id="BICYCLING" value="BICYCLING">
+                </label>
+                <label for="DRIVING" class="inline">
+                    Drive <input type="radio" name="transit" id="DRIVING" value="DRIVING">
+                </label>
             <input type="submit" name="Submit" class="submit">
+           
             
             <section id="map">
                 
             </section>
         </form>
-        <p class="description">
-            An isochrone is a cartographic shape representing an equal amount of time in all directions.
-            Please input an address and a desired driving time, and zoom out to see your isochrone generated around the location of your choice.
-        </p>
     </main>
+    <div class="fade"></div>
+    <footer class="prompt">
+        <p class="description">
+            An <br><span>ISOCHRONE</span><br> is a cartographic depiction of an equal amount of travel time in all directions. <br><br><br>
+            To make an <br><span>ISOCHRONE</span><br> please input an address, your travel time, and method of transport.
+            <br><br>
+            <input type="button" name="prompt" id="prompt" value="Continue">
+        </p>
+    </footer>
     
     <script src="//code.jquery.com/jquery.min.js"></script>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=ApiKeyHere"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=apikeyhere"></script>
     <script type="text/javascript" src="index.js"></script>
 </body>
 </html>
