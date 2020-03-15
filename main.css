@@ -40,7 +40,7 @@ body{
 }
 
 input[type="text"], input[type="number"]{
-    width: 97vw;
+    width: 90vw;
 }
 
 input[type="radio"]{
@@ -64,8 +64,8 @@ input[type="submit"]{
 
 #map{
     border: 1px solid black;
-    height:80vh;
-    width:97vw;
+    height:75vh;
+    width:94vw;
     margin-left:auto;
     margin-right:auto;
     margin-top:3px;
@@ -80,7 +80,7 @@ input[type="submit"]{
     }
 
     input[type="text"], input[type="number"]{
-        width: 97%;
+        width: 90%;
     }
     
     input[type="radio"]{
@@ -103,15 +103,21 @@ input[type="submit"]{
     }
 
     #map{
-        margin-left:10px;
+        margin-left:2vw;
+        width:96vw;
+        height:80vh
+
     }
 
     .prompt{
-        position:flex;
+        position:fixed;
         height:300px;
         width:500px;
         justify-content: right;
         align-items: center;
+        left:50%;
+        margin-left:-250px;
+        top:35vh;
         }
 
     .fade{
@@ -121,7 +127,7 @@ input[type="submit"]{
         width: 100%;
         height:100%;
         background-color: white;
-        opacity: .9;
+        opacity: .7;
     }
     }
 

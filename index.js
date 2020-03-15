@@ -69,21 +69,30 @@ function getOrigin(){
             state.key=responseText
             getGeocode();
         })
-        .catch(error => console.error(error));
+        .catch(error => alert(`Sorry, looks like something went wrong. The error is: ${error}`));
 }
 
 // aquires the coordinates of the origin of the isochrone
 function getGeocode(){
     const subAddress=state.address.split(' ').join('+')
     let query=`https://maps.googleapis.com/maps/api/geocode/json?address=${subAddress}&key=${state.key}`
-
-    fetch(query)
+    if(state.address!=='' && state.time!==0 && state.transit !==''){
+        fetch(query)
         .then(response => response.json())
         .then(responseJson => {
-            state.origin=[responseJson.results[0].geometry.location.lat,responseJson.results[0].geometry.location.lng];
-            getMatrix(minToMod());
+            if (responseJson.status !=="ZERO_RESULTS"){
+                state.origin=[responseJson.results[0].geometry.location.lat,responseJson.results[0].geometry.location.lng];
+                getMatrix(minToMod());
+            } else {
+                alert(`Seems that address counldn't be found. Please try again with another address.`)
+            }
+            
         })
         .catch(error => console.error(error));
+    } else {
+        alert('Please fill in all fields properly')
+    }
+    
 }
 
 // calls the distance matrix services (because CORS and client side silliness) to get distances for adjusting coordinates
@@ -102,8 +111,12 @@ function getMatrix(){
 // sorts the distancematrix response and if above a certain percentage incorrect, recalls the getMatrix function to adjust
 function callback(response, status) {
     if (status == 'OK') {
-        let responseValues=response.rows[0].elements.map(val => {
-            return (val.duration.value)/60;
+        let responseValues=response.rows[0].elements.map((val, ind) => {
+            if(val.status==="ZERO_RESULTS"){
+                return state.time*2.5;
+            } else {
+                return (val.duration.value)/60;
+            }
         })
 
         if (state.count<state.calls && acceptDest(responseValues)){
@@ -195,6 +208,20 @@ function initMap() {
       fillOpacity: 0.35
     });
     isochrone.setMap(map);
+
+    // autozoom the map to fit most of the isochrone
+    let bounds=state.dest.reduce((acc, val) =>{
+        return[[Math.min(acc[0][0], Math.abs(val.lat)), Math.min(acc[0][1], Math.abs(val.lng))],[Math.max(acc[1][0], Math.abs(val.lat)), Math.max(acc[1][1], Math.abs(val.lng))]]
+    },[[Infinity,Infinity],[-Infinity, -Infinity]])
+
+    const sign=[state.origin[0]/Math.abs(state.origin[0]), state.origin[1]/Math.abs(state.origin[1])]
+
+    bounds=[{lat:bounds[0][0]*sign[0],lng:bounds[0][1]*sign[1]},{lat:bounds[1][0]*sign[0],lng:bounds[1][1]*sign[1]}]
+    let fitBounding=new google.maps.LatLngBounds();
+    fitBounding.extend(bounds[0])
+    fitBounding.extend(bounds[1])
+    // [{lat:bounds[0][0], lng:bounds[0][1]},{lat:bounds[1][0], lng:bounds[1][1]}]
+    map.fitBounds(fitBounding);
   }
 
 function main() {

@@ -5,15 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/normalize/6.0.0/normalize.css">
     <link rel="stylesheet" type="text/css" href="main.css">
+    <link rel='icon' href='images/favicon.ico' type='image/x-icon'>
     <title>Travel Time</title>
 </head>
 <body>
     
     <main>
         <form class="mapInput">
-            <input type="text" name="address" id="address" placeholder="Address" autocomplete="off">
+            <label for="address">Origin</label>
+            <input type="text" name="address" id="address" placeholder="Address" autocomplete="off" required>
             <br>
-            <input type="number" name="time" id="time" autocomplete="off" placeholder="Minutes">            
+            <label for="time">Travel Time</label>
+            <input type="number" name="time" id="time" autocomplete="off" placeholder="Minutes" required>            
             <br>
                 <label for="WALKING" class="inline">
                     Walk <input type="radio" name="transit" id="WALKING" value="WALKING"> 
@@ -24,12 +27,12 @@
                 <label for="DRIVING" class="inline">
                     Drive <input type="radio" name="transit" id="DRIVING" value="DRIVING">
                 </label>
-            <input type="submit" name="Submit" class="submit">
+            <input type="submit" name="Submit" class="submit" value="Submit">
            
             
-            <section id="map">
+            <div id="map">
                 
-            </section>
+            </div>
         </form>
     </main>
     <div class="fade"></div>
@@ -43,7 +46,7 @@
     </footer>
     
     <script src="//code.jquery.com/jquery.min.js"></script>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC1LxzpI4rZBrqvFuSZviap-E_O1TnGLhQ"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=yourKeyHere"></script>
     <script type="text/javascript" src="index.js"></script>
 </body>
 </html>
